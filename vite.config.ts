@@ -24,11 +24,21 @@ export default defineConfig({
       })
   ],
 
+  css: {
+    preprocessorOptions: {
+      less: {
+        modifyVars: {},
+        javascriptEnabled: true,
+        additionalData: `@import "src/assets/css/var.less";`,
+      },
+    },
+  },
+
   server:{
     // open: true,
     // https: {
-    //   cert: readFileSync(path.join(__dirname, 'src/ssl/1_mp.kunjuee.com_bundle.crt')),
-    //   key: readFileSync(path.join(__dirname , 'src/ssl/2_mp.kunjuee.com.key') )
+    //   cert: readFileSync(path.join(__dirname, 'src/ssl/ssl.crt')),
+    //   key: readFileSync(path.join(__dirname , 'src/ssl/ssl.key') )
     // },
     proxy:{
       '^/userinfo': {
@@ -41,18 +51,6 @@ export default defineConfig({
         target: env.VITE_API_REST,
         changeOrigin: true,
         rewrite: (path) => path.replace('/api', '/'),
-        secure: false,
-      },
-      '^/fq': {
-        target: env.VITE_QUERY_REST,
-        changeOrigin: true,
-        rewrite: (path) => path.replace('/fq', '/'),
-        secure: false,
-      },
-      '^/auth': {
-        target: env.VITE_AUTH_REST,
-        changeOrigin: true,
-        rewrite: (path) => path.replace('/auth', '/'),
         secure: false,
       },
     }

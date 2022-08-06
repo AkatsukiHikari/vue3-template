@@ -2,18 +2,46 @@
   <n-config-provider 
     :locale="zhCN"
     :date-locale="dateZhCN"
+    :theme="getDarkTheme"
     :theme-overrides="themeOverrides">
-    <router-view />
+
+      <n-loading-bar-provider>
+        <n-dialog-provider>
+          <DialogContent />
+          <n-notification-provider>
+            <n-message-provider>
+              <message-api />
+              
+              <router-view />
+
+            </n-message-provider>
+          </n-notification-provider>
+        </n-dialog-provider>
+      </n-loading-bar-provider>
   </n-config-provider>
 
 </template>
 
 <script  setup lang="ts">
-import { zhCN, dateZhCN , NMessageProvider , NConfigProvider , darkTheme } from 'naive-ui'
+import { 
+    zhCN, 
+    dateZhCN , 
+    NConfigProvider , 
+    darkTheme ,
+    NDialogProvider,
+    NNotificationProvider,
+    NMessageProvider,
+    NLoadingBarProvider
+} from 'naive-ui'
+import { DialogContent } from '@/components/common/DialogContent'
 import MessageApi from '@/components/message-api.vue'
 import { ref , computed , onMounted } from 'vue'
 import { lighten } from '@/utils/index'
+import { useAppStore } from '@/stores/app'
+import { useThemeStore } from '@/stores/theme'
 
+const themeStore = useThemeStore();
+const getDarkTheme = computed(() => (themeStore.isDarkTheme ? darkTheme : undefined));
 
 const lightenStr = lighten("#4098fc", 6);
 

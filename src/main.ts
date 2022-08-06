@@ -9,6 +9,7 @@ import App from './App.vue'
 import "./index.css"
 
 // 默认路由及布局
+import { RedirectRoute } from '@/router/base'
 import { createRouter , createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import { setupLayouts } from 'virtual:generated-layouts'
 import generatedRoutes from 'virtual:generated-pages'

@@ -2,7 +2,7 @@
  * @Author: AkatsukiHikari 66936871+AkatsukiHikari@users.noreply.github.com
  * @Date: 2022-07-31 09:53:34
  * @LastEditors: AkatsukiHikari 66936871+AkatsukiHikari@users.noreply.github.com
- * @LastEditTime: 2022-07-31 10:01:32
+ * @LastEditTime: 2022-08-06 19:59:27
  * @FilePath: /vue3-template/src/stores/appStore.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -40,7 +40,7 @@ interface ProjectSettingState {
 }
 
 export const useAppStore = defineStore({
-  id: 'app-project-setting',
+  id: 'AppStore',
   state: (): ProjectSettingState => ({
     navMode: navMode,
     navTheme,

@@ -46,6 +46,7 @@ export const useAsyncRouteStore = defineStore({
         // 设置需要缓存的组件
         this.keepAliveComponents = compNames;
       },
+      
 
     }
 

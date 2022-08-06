@@ -5,7 +5,7 @@ import { ACCESS_TOKEN, CURRENT_USER } from '@/types/mutation-types';
 /*
  * @Author: hikari
  * @Date: 2022-04-05 09:06:53
- * @LastEditTime: 2022-07-31 20:11:43
+ * @LastEditTime: 2022-08-06 19:21:57
  * @LastEditors: AkatsukiHikari 66936871+AkatsukiHikari@users.noreply.github.com
  * @Description: 用户状态管理
  * @FilePath: /cloud-desktop-plus/src/stores/user.ts
@@ -14,7 +14,7 @@ import { ACCESS_TOKEN, CURRENT_USER } from '@/types/mutation-types';
 
 export interface IUserInfo {
     // 用户名
-    name?: string,
+    userName?: string,
     // 手机号
     phone? :string,
     // 用户id
@@ -49,6 +49,9 @@ export const useUserStore = defineStore("user-store",{
     actions:{
         // 登录
         async login( userInfo:any ) {
+            return Promise.resolve({
+                code: 0
+            })
             try {
                 const response = await login(userInfo);
                 const { result, code } = response;
@@ -60,8 +63,16 @@ export const useUserStore = defineStore("user-store",{
                 }
                 return Promise.resolve(response);
             } catch (e) {
-            return Promise.reject(e);
+                return Promise.reject(e);
             }
+        },
+
+        logout(){
+            this.setPermissions([]);
+            this.setUserInfo({});
+            storage.remove(ACCESS_TOKEN);
+            storage.remove(CURRENT_USER);
+            return Promise.resolve('');
         },
         /**
          * @description: 

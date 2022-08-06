@@ -13,6 +13,7 @@
         "@types/qs": "^6.9.7",
         "@vueuse/core": "^8.9.4",
         "echarts": "^5.3.3",
+        "element-resize-detector": "^1.2.4",
         "ityped": "^1.0.3",
         "less": "^4.1.2",
         "less-loader": "^10.2.0",
@@ -24,6 +25,8 @@
         "vue": "^3.2.25",
         "vue-color-kit": "^1.0.5",
         "vue-router": "^4.0.14",
+        "vue-types": "^4.2.1",
+        "vuedraggable": "^4.1.0",
         "xlsx": "^0.18.5"
     },
     "devDependencies": {

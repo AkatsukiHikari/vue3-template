@@ -2,7 +2,7 @@
  * @Author: Hikari 66936871+Hikari@users.noreply.github.com
  * @Date: 2022-07-21 17:43:41
  * @LastEditors: AkatsukiHikari 66936871+AkatsukiHikari@users.noreply.github.com
- * @LastEditTime: 2022-08-04 20:56:07
+ * @LastEditTime: 2022-08-06 18:06:09
  * @FilePath: /vue3-template/src/components/common/Menu/src/Menu.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -14,16 +14,16 @@
         :collapsed="collapsed"
         :collapsed-width="64"
         :collapsed-icon-size="20"
-        :indent="24"
-        :expanded-keys="openKeys"
         :value="getSelectedKeys"
+        :indent="24"
+        default-expand-all
         @update:value="clickMenuItem"
-        @update:expanded-keys="menuExpanded"
     />
 </template>
 
 <script lang="ts" setup>
 import { NMenu } from 'naive-ui'
+import type { MenuOption } from 'naive-ui'
 import { defineComponent, ref, onMounted, reactive, computed, watch, toRefs, unref, toRef } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { generatorMenu, generatorMenuMix } from '@/utils';
@@ -52,6 +52,14 @@ const inverted = computed(() => {
     return ['dark', 'header-dark'].includes(settingStore.navTheme);
 });
 
+
+const getSelectedKeys = computed(() => {
+    let location = props.location;
+    return location === 'left' || (location === 'header' && unref(navMode) === 'horizontal')
+        ? unref(selectedKeys)
+        : unref(headerMenuSelectKey);
+});
+
 const { getNavMode } = settingStore;
 
 const navMode = getNavMode;
@@ -63,23 +71,11 @@ const router = useRouter();
 
 // 获取当前打开的子菜单
 const matched = currentRoute.matched;
-const getOpenKeys = matched && matched.length ? matched.map((item) => item.name) : [];
-
-const openKeys = ref();
-
 const asyncRouteStore = useAsyncRouteStore();
 
-const menus = ref<any[]>([]);
+const menus = ref<any []>([]);
 const selectedKeys = ref<string>(currentRoute.name as string);
 const headerMenuSelectKey = ref<string>('');
-
-
-const getSelectedKeys = computed(() => {
-    let location = props.location;
-    return location === 'left' || (location === 'header' && unref(navMode) === 'horizontal')
-        ? unref(selectedKeys)
-        : unref(headerMenuSelectKey);
-});
 
 
 
@@ -118,7 +114,6 @@ function updateMenu() {
 
 function updateSelectedKeys() {
     const matched = currentRoute.matched;
-    openKeys.value = matched.map((item) => item.name);
     const activeMenu: string = (currentRoute.meta?.activeMenu as string) || '';
     selectedKeys.value = activeMenu ? (activeMenu as string) : (currentRoute.name as string);
 }
@@ -133,26 +128,7 @@ function clickMenuItem(key: string) {
     emit('clickMenuItem' as any, key);
 }
 
-//展开菜单
-function menuExpanded(openKeys: string[]) {
-    if (!openKeys) return;
-    const latestOpenKey = openKeys.find((key) => openKeys.indexOf(key) === -1);
-    const isExistChildren = findChildrenLen(latestOpenKey as string);
-    openKeys = isExistChildren ? (latestOpenKey ? [latestOpenKey] : []) : openKeys;
-}
 
-
-//查找是否存在子路由
-function findChildrenLen(key: string) {
-    if (!key) return false;
-    const subRouteChildren: string[] = [];
-    for (const { children, key } of unref(menus)) {
-        if (children && children.length) {
-        subRouteChildren.push(key as string);
-        }
-    }
-    return subRouteChildren.includes(key);
-}
 
 onMounted(() => {
     updateMenu();

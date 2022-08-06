@@ -31,4 +31,5 @@
 meta:
   title: 工作台
   layout: index
+  icon: DashboardOutlined
 </route>

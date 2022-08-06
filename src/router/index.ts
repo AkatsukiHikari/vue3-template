@@ -2,7 +2,7 @@
  * @Author: AkatsukiHikari 66936871+AkatsukiHikari@users.noreply.github.com
  * @Date: 2022-07-31 19:48:01
  * @LastEditors: AkatsukiHikari 66936871+AkatsukiHikari@users.noreply.github.com
- * @LastEditTime: 2022-08-04 20:56:19
+ * @LastEditTime: 2022-08-06 16:11:56
  * @FilePath: /vue3-template/src/router/index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -63,7 +63,6 @@ export const generatedMenus = () => {
     const asyncRouteStore = useAsyncRouteStore();
     let accessorRouterMap = new Map<string, string>();
     generatedRoutes.map( (router:any) => {
-        console.log( router );
         const baseRoute = router.meta.baseRoute;
         if( baseRoute ){
             const parent_router = accessorRouterMap.get( baseRoute ) ;
